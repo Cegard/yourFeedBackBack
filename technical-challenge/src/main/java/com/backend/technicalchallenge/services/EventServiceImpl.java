@@ -21,6 +21,6 @@ public class EventServiceImpl implements EventService {
     }
 
     public List<Event> getEventsByStatusActive() {
-        return eventRepository.findAllByStatus(Status.ACTIVE.toString());
+            return eventRepository.findAllByStatus(Status.ACTIVE);
     }
 }

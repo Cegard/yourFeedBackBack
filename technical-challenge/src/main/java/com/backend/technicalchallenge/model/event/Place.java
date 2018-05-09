@@ -18,6 +18,7 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @JsonIgnore
     @OneToMany(mappedBy = "place")

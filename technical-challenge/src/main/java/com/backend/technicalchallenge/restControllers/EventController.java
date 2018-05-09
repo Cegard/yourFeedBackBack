@@ -24,12 +24,12 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/EventController/getEvents")
+    @GetMapping("/getEvents")
     public List<Event> getEvents() {
         return eventService.getEventsByStatusActive();
     }
 
-    @GetMapping("/EventController/getEventById/{id}")
+    @GetMapping("/getEventById/{id}")
     public Optional<Event> getUserByid(@PathVariable("id") Long id) {
         return eventService.getEventId(id);
     }
