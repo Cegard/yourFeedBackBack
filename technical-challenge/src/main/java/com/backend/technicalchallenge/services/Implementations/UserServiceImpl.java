@@ -2,8 +2,10 @@ package com.backend.technicalchallenge.services.Implementations;
 
 import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+import com.backend.technicalchallenge.model.event.Event;
 import com.backend.technicalchallenge.model.user.UserApp;
 import com.backend.technicalchallenge.persistance.EvaluatedUserRepository;
+import com.backend.technicalchallenge.persistance.EventRepository;
 import com.backend.technicalchallenge.persistance.UserRepository;
 import com.backend.technicalchallenge.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private EvaluatedUserRepository evaluatedUserRepository;
@@ -43,7 +49,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<EvaluatedUser> getUserOnEvent(Long idEvent) {
 
-        return evaluatedUserRepository.findAllByEvent_Id(idEvent);
+        Optional<Event> event = eventRepository.findById(idEvent);
+        return evaluatedUserRepository.findAllByEvent(event);
     }
 
 
