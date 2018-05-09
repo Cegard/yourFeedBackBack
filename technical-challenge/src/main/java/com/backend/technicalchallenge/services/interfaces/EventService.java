@@ -1,4 +1,4 @@
-package com.backend.technicalchallenge.services;
+package com.backend.technicalchallenge.services.interfaces;
 
 import com.backend.technicalchallenge.model.event.Event;
 

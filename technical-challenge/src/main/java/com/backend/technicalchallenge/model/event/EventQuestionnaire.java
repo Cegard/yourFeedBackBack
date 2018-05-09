@@ -4,7 +4,6 @@ package com.backend.technicalchallenge.model.event;
 import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.Type;
 import com.backend.technicalchallenge.model.questionnaire.Questionnaire;
-import com.sun.prism.paint.Paint;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

@@ -1,7 +1,8 @@
-package com.backend.technicalchallenge.services;
+package com.backend.technicalchallenge.services.Implementations;
 
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.persistance.DocumentTypeRepository;
+import com.backend.technicalchallenge.services.interfaces.DocumentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
