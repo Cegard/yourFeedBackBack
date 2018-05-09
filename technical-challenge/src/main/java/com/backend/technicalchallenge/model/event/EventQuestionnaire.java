@@ -19,6 +19,7 @@ public class EventQuestionnaire {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private Type type;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
     private Questionnaire questionnaire;

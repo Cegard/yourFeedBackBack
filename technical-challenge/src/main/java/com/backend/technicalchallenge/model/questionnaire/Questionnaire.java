@@ -27,6 +27,7 @@ public class Questionnaire {
     private String furtherComments;
     private Type type;
     private Date creationDate;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @JsonIgnore
     @OneToMany(mappedBy = "questionnaire")

@@ -1,17 +1,17 @@
 package com.backend.technicalchallenge.restControllers;
 
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+import com.backend.technicalchallenge.model.questionnaire.GroupApp;
+import com.backend.technicalchallenge.model.questionnaire.Questionnaire;
 import com.backend.technicalchallenge.model.user.Area;
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.model.user.Role;
 import com.backend.technicalchallenge.model.user.UserApp;
-import com.backend.technicalchallenge.services.interfaces.AreaService;
-import com.backend.technicalchallenge.services.interfaces.DocumentTypeService;
-import com.backend.technicalchallenge.services.interfaces.RoleService;
-import com.backend.technicalchallenge.services.interfaces.UserService;
+import com.backend.technicalchallenge.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.acl.Group;
 import java.util.List;
 
 @RestController
@@ -22,13 +22,15 @@ public class UserController {
     private AreaService areaService;
     private RoleService roleService;
     private UserService userService;
+    private QuestionnaireService questionnaireService;
 
     @Autowired
-    public UserController(DocumentTypeService documentTypeService,AreaService areaService,RoleService roleService, UserService userService) {
+    public UserController(DocumentTypeService documentTypeService, AreaService areaService, RoleService roleService, UserService userService, QuestionnaireService questionnaireService) {
         this.documentTypeService = documentTypeService;
         this.areaService = areaService;
         this.roleService = roleService;
         this.userService = userService;
+        this.questionnaireService = questionnaireService;
     }
 
     @GetMapping("/getUsers")
@@ -68,6 +70,11 @@ public class UserController {
 
     @GetMapping("/getEvaluatedUserByEventId/{id}")
     public List<EvaluatedUser> getEvaluatedUserByEventId(@PathVariable("id") Long id) {
-        return userService.getUserOnEvent(id);
+        return userService.getEvaluatedUserForAnEvent(id);
+    }
+
+    @GetMapping("/test")
+    public List<GroupApp> test(){
+        return questionnaireService.getQuestionsOnQuestionnaire();
     }
 }
