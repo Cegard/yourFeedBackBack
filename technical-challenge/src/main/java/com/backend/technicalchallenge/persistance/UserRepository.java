@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.persistance;
 
+import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.user.UserApp;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -11,7 +12,7 @@ public interface UserRepository extends PagingAndSortingRepository<UserApp, Long
         List<UserApp> findAll();
         UserApp findByEmailAndPassword(String email, String password);
         Optional<UserApp> findById(Long id);
-        List<UserApp> findByStatus(String status);
+        List<UserApp> findByStatus(Status status);
 
 
 }

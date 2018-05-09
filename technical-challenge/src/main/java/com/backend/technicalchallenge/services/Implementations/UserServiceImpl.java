@@ -1,11 +1,10 @@
-package com.backend.technicalchallenge.services;
+package com.backend.technicalchallenge.services.Implementations;
 
 import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.user.UserApp;
 import com.backend.technicalchallenge.persistance.UserRepository;
-import org.apache.catalina.User;
+import com.backend.technicalchallenge.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +22,11 @@ public class UserServiceImpl implements UserService {
         return userApp;
     }
 
-    public List<UserApp> getActiveUsers(){ return userRepository.findByStatus(Status.ACTIVE.toString());}
+    @Override
+    public List<UserApp> getActiveUsers(){ return userRepository.findByStatus(Status.ACTIVE);}
 
     @Override
-    public List<UserApp> getUsers(){ return userRepository.findAll(); }
+    public List<UserApp> getAllUsers(){ return userRepository.findAll(); }
 
 
     @Override
@@ -34,5 +34,5 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).get();
     }
 
-    
+
 }
