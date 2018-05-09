@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.restControllers;
 
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.user.Area;
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.model.user.Role;
@@ -63,5 +64,10 @@ public class UserController {
     @GetMapping("/getUserById/{id}")
     public UserApp getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/getEvaluatedUserByEventId/{id}")
+    public List<EvaluatedUser> getEvaluatedUserByEventId(@PathVariable("id") Long id) {
+        return userService.getUserOnEvent(id);
     }
 }
