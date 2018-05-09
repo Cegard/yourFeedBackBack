@@ -16,6 +16,9 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private EventRepository eventRepository;
 
+
+    public List<Event> getEvents() { return eventRepository.findAll(); }
+
     public Optional<Event> getEventId(Long id) {
         return eventRepository.findById(id);
     }
@@ -23,4 +26,5 @@ public class EventServiceImpl implements EventService {
     public List<Event> getEventsByStatusActive() {
         return eventRepository.findAllByStatus(Status.ACTIVE.toString());
     }
+
 }
