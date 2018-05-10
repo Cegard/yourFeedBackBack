@@ -1,9 +1,7 @@
 package com.backend.technicalchallenge.restControllers;
 
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
-import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
-import com.backend.technicalchallenge.model.questionnaire.Questionnaire;
 import com.backend.technicalchallenge.model.user.Area;
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.model.user.Role;
@@ -12,8 +10,8 @@ import com.backend.technicalchallenge.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.acl.Group;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -60,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/setUser")
-    public UserApp getUser(@RequestBody UserApp userApp) {
+    public Optional<UserApp> getUser(@RequestBody UserApp userApp) {
         return userService.setUser(userApp);
     }
 
