@@ -1,6 +1,7 @@
 package com.backend.technicalchallenge.model.questionnaire;
 
 import com.backend.technicalchallenge.model.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,8 +15,11 @@ public class QuestionnaireQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long Id;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    @JsonIgnore
     @ManyToOne
     private Questionnaire questionnaire;
-    @ManyToOne Question question;
+    @ManyToOne
+    private Question question;
 }

@@ -18,6 +18,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long Id;
     private String question;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
     private GroupApp groupApp;

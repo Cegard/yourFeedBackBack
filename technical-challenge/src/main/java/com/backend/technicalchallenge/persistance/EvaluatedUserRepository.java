@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.persistance;
 
+import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.event.Event;
 import com.backend.technicalchallenge.model.user.UserApp;
@@ -12,6 +13,8 @@ public interface EvaluatedUserRepository extends PagingAndSortingRepository<Eval
 
     List<EvaluatedUser> findAllByEvent(Optional<Event> eventId);
     Optional<EvaluatedUser> findById(Long id);
+    List<EvaluatedUser> findAllByEventAndStatus(Optional<Event> eventId, Status status);
+    List<EvaluatedUser> findAll();
 
 
 }

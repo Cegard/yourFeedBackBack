@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService {
         return userApp;
     }
 
+
+
     @Override
     public List<UserApp> getActiveUsers(){ return userRepository.findByStatus(Status.ACTIVE);}
 
@@ -48,15 +50,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<EvaluatedUser> getUserOnEvent(Long idEvent) {
+        return null;
+    }
 
+
+    @Override
+    public List<EvaluatedUser> getEvaluatedUserForAnEvent(Long idEvent) {
         Optional<Event> event = eventRepository.findById(idEvent);
-        return evaluatedUserRepository.findAllByEvent(event);
+        return evaluatedUserRepository.findAllByEventAndStatus(event, Status.ACTIVE);
     }
 
     @Override
     public EvaluatedUser getEvaluatedUserById(Long idEvaluatedUser) {
         return evaluatedUserRepository.findById(idEvaluatedUser).get();
     }
+
+
+
+
 
 
 }

@@ -33,4 +33,5 @@ public class EventController {
     public Optional<Event> getUserByid(@PathVariable("id") Long id) {
         return eventService.getEventId(id);
     }
+
 }
