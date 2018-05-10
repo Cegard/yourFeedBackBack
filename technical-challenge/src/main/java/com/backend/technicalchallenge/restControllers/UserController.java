@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/setUser")
-    public Optional<UserApp> getUser(@RequestBody UserApp userApp) {
+    public Optional<UserApp> setUser(@RequestBody UserApp userApp) {
         return userService.setUser(userApp);
     }
 
