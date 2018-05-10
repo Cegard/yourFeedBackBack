@@ -1,0 +1,27 @@
+package com.backend.technicalchallenge.services.Implementations;
+
+import com.backend.technicalchallenge.model.evaluation.Evaluation;
+import com.backend.technicalchallenge.persistance.EvaluationRepository;
+import com.backend.technicalchallenge.services.interfaces.EvaluationService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+public class EvaluationServiceImpl implements EvaluationService {
+
+    @Autowired
+    private EvaluationRepository evaluationRepository;
+
+
+    @Override
+    public boolean saveEvaluation(Evaluation evaluation) {
+         evaluationRepository.save(evaluation);
+         return true;
+    }
+
+    @Override
+    public List<Evaluation> getEvaluations() {
+        return null;
+    }
+
+}

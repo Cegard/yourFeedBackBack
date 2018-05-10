@@ -11,7 +11,6 @@ import com.backend.technicalchallenge.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +28,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserApp setUser(UserApp userApp) {
+    public Optional<UserApp> setUser(UserApp userApp) {
         userRepository.save(userApp);
-        return userApp;
+        return userRepository.findById(userApp.getId());
     }
 
 

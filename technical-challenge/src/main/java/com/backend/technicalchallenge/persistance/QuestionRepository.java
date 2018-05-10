@@ -14,7 +14,7 @@ public interface QuestionRepository extends PagingAndSortingRepository<Question,
     @Query(value = "SELECT q.* FROM question q\n" +
             "join questionnaire_question qq on q.id = qq.question_id\n" +
             "join event_questionnaire eq on qq.questionnaire_id = eq.questionnaire_id \n" +
-            "where eq.id = :id and eq.type='USER' order by q.group_app_id ",nativeQuery = true)
+            "where eq.event_id = :id and eq.type='USER' order by q.group_app_id ",nativeQuery = true)
     List<Question> findByEvent(@Param("id") Long id);
 
 
