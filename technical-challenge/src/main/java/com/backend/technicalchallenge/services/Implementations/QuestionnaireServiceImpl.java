@@ -1,47 +1,74 @@
 package com.backend.technicalchallenge.services.Implementations;
 
-import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+
+import com.backend.technicalchallenge.model.event.EventQuestionnaire;
 import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
-import com.backend.technicalchallenge.model.questionnaire.Questionnaire;
-import com.backend.technicalchallenge.persistance.GroupAppRepository;
-import com.backend.technicalchallenge.persistance.QuestionRepository;
-import com.backend.technicalchallenge.persistance.QuestionnaireQuestionRepository;
-import com.backend.technicalchallenge.persistance.QuestionnaireRepository;
+import com.backend.technicalchallenge.model.questionnaire.QuestionnaireQuestion;
+import com.backend.technicalchallenge.persistance.*;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private GroupAppRepository groupAppRepository;
+
+    @Autowired
+    private EventQuestionnaireRepository eventQuestionnaireRepository;
+
     @Autowired
     private QuestionnaireQuestionRepository questionnaireQuestionRepository;
 
 
-    @Override
-    public List<EvaluatedUser> getEvaluatedUserForAnEvent(Long idEvent) {
-        return null;
+    private  Map<GroupApp, List<Question> > orderedMapGroupQuestions(Long key) {
+        Optional<EventQuestionnaire> eventUserQuestionnaire = eventQuestionnaireRepository.findAllUserQuestionnaireByIdEventAndStatus(key);
+        Map<GroupApp, List<Question> > groups= new HashMap<>();
+        List<QuestionnaireQuestion> questionnaireQuestion = questionnaireQuestionRepository.findAllBy(eventUserQuestionnaire.get().getQuestionnaire().getId());
+
+        questionnaireQuestion.forEach(
+                (QuestionnaireQuestion q) -> {
+
+                    Optional<Question> question = questionRepository.findById(q.getQuestion().getId());
+
+                    Optional<GroupApp> groupAppOfQuestion = groupAppRepository.findById(question.get().getGroupApp().getId());
+                    if(groups.containsKey(groupAppOfQuestion.get())){
+                        List<Question> questionsOfGroup = groups.get(groupAppOfQuestion);
+                        questionsOfGroup.add(question.get());
+                        groups.put(groupAppOfQuestion.get(), questionsOfGroup);
+                    }else{
+                        List<Question> questionsOfGroup = new ArrayList<>();
+                        questionsOfGroup.add(question.get());
+                        groups.put(groupAppOfQuestion.get(), questionsOfGroup );
+
+
+                    }
+
+                }
+        );
+
+        return groups;
     }
 
     @Override
-    public List<Questionnaire> getEventQuestionnaire(Long idEvent) {
-        return null;
+    public Object[] getGroupAppOfEventQuestionnaire(Long idEvent) {
+
+        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
+
+        return groups.keySet().toArray();
     }
 
     @Override
-    public List<Question> getQuestionsOnQuestionnaire(Long id) {
-        return questionRepository.findByEvent(id);
-
+    public List<Question> getQuestionsOfGroup(Long idEvent, Long group) {
+        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
+        Optional<GroupApp> groupApp = groupAppRepository.findById(group);
+        return groups.get(groupApp.get());
     }
-
 }

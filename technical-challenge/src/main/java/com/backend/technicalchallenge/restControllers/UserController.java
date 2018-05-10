@@ -21,15 +21,13 @@ public class UserController {
     private AreaService areaService;
     private RoleService roleService;
     private UserService userService;
-    private QuestionnaireService questionnaireService;
 
     @Autowired
-    public UserController(DocumentTypeService documentTypeService, AreaService areaService, RoleService roleService, UserService userService, QuestionnaireService questionnaireService) {
+    public UserController(DocumentTypeService documentTypeService, AreaService areaService, RoleService roleService, UserService userService) {
         this.documentTypeService = documentTypeService;
         this.areaService = areaService;
         this.roleService = roleService;
         this.userService = userService;
-        this.questionnaireService = questionnaireService;
     }
 
     @GetMapping("/getUsers")
@@ -71,14 +69,10 @@ public class UserController {
     public List<EvaluatedUser> getEvaluatedUserByEventId(@PathVariable("id") Long id) {
         return userService.getEvaluatedUserForAnEvent(id);
     }
-
-    @GetMapping("/getQuestionbyEvent/{id}")
-    public List<Question> getQuestionbyEvent(@PathVariable("id") Long id){
-        return questionnaireService.getQuestionsOnQuestionnaire(id);
-    }
-
     @GetMapping("/getEvaluatedUserById/{id}")
     public EvaluatedUser getEvaluatedUserById(@PathVariable("id") Long id) {
         return userService.getEvaluatedUserById(id);
     }
+
+
 }

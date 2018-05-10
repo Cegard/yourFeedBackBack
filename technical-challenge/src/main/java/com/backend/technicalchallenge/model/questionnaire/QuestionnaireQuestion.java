@@ -17,7 +17,6 @@ public class QuestionnaireQuestion {
     private Long Id;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @JsonIgnore
     @ManyToOne
     private Questionnaire questionnaire;
     @ManyToOne

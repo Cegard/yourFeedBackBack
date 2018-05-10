@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).get();
     }
 
-    
+
     @Override
     public List<EvaluatedUser> getEvaluatedUserForAnEvent(Long idEvent) {
         Optional<Event> event = eventRepository.findById(idEvent);

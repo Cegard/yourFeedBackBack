@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(uniqueConstraints =  @UniqueConstraint(columnNames = {"questionnaire_id", "event_id"}))
+@Table(uniqueConstraints =  @UniqueConstraint(columnNames = {"questionnaire_id", "event_id", "type"}))
 public class EventQuestionnaire {
 
     @Id
@@ -23,10 +23,8 @@ public class EventQuestionnaire {
     private Type type;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @JsonIgnore
     @ManyToOne
     private Questionnaire questionnaire;
-    @JsonIgnore
     @ManyToOne
     private Event event;
 

@@ -21,7 +21,7 @@ public class Evaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
     @ManyToOne
     private Event event;
     @ManyToOne

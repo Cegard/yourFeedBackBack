@@ -27,8 +27,8 @@ public class Event {
     private Date creationDate;
     @ManyToOne
     private Place place;
-    @OneToMany (mappedBy = "event")
     @JsonIgnore
+    @OneToMany (mappedBy = "event")
     private List<EventQuestionnaire> EventQuestionnaires;
     @JsonIgnore
     @OneToMany(mappedBy = "event")
