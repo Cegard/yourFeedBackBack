@@ -70,4 +70,9 @@ public class UserController {
     public List<EvaluatedUser> getEvaluatedUserByEventId(@PathVariable("id") Long id) {
         return userService.getUserOnEvent(id);
     }
+
+    @GetMapping("/getEvaluatedUserById/{id}")
+    public EvaluatedUser getEvaluatedUserById(@PathVariable("id") Long id) {
+        return userService.getEvaluatedUserById(id);
+    }
 }

@@ -4,6 +4,7 @@ import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.user.UserApp;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -12,4 +13,6 @@ public interface UserService {
     UserApp setUser(UserApp userApp);
     UserApp getUserById(Long id);
     List<EvaluatedUser> getUserOnEvent(Long idEvent);
+    EvaluatedUser getEvaluatedUserById(Long idEvaluatedUser);
+
 }

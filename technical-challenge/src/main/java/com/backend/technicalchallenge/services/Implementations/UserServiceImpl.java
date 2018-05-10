@@ -53,5 +53,10 @@ public class UserServiceImpl implements UserService {
         return evaluatedUserRepository.findAllByEvent(event);
     }
 
+    @Override
+    public EvaluatedUser getEvaluatedUserById(Long idEvaluatedUser) {
+        return evaluatedUserRepository.findById(idEvaluatedUser).get();
+    }
+
 
 }
