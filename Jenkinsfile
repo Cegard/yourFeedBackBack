@@ -5,7 +5,9 @@ pipeline {
 		stage('build') {
 			steps {
 				echo 'Building...'
-				sh 'cd technical-challenge && mvn -B -DskipTests clean package'
+				sh 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/'
+				sh 'cd technical-challenge'
+				sh 'mvn -B -DskipTests clean package'
 			}
 		}
 	}
