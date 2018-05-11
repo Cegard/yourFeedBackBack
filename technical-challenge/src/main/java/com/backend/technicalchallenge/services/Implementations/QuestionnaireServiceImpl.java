@@ -58,17 +58,17 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public Object[] getGroupAppOfEventQuestionnaire(Long idEvent) {
-
-        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
-
-        return groups.keySet().toArray();
+    public List<GroupApp> getGroupAppOfEventQuestionnaire(Long idEvent) {
+//        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
+//        return groups.keySet().toArray();
+       return groupAppRepository.findByEvent(idEvent);
     }
 
     @Override
     public List<Question> getQuestionsOfGroup(Long idEvent, Long group) {
-        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
-        Optional<GroupApp> groupApp = groupAppRepository.findById(group);
-        return groups.get(groupApp.get());
+//        Map<GroupApp, List<Question> > groups = orderedMapGroupQuestions(idEvent);
+//        Optional<GroupApp> groupApp = groupAppRepository.findById(group);
+//        return groups.get(groupApp.get())
+        return questionRepository.findByEventAndGroupApp(idEvent,group);
     }
 }

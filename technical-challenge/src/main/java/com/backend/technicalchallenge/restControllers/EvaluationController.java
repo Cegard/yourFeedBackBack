@@ -2,6 +2,7 @@ package com.backend.technicalchallenge.restControllers;
 
 
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
+import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
@@ -10,14 +11,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class EvaluationController {
 
     @Autowired
@@ -50,7 +49,7 @@ public class EvaluationController {
     }
 
     @GetMapping("/getQuestionsGroups/{id}")
-    public Object[] getGroups(@PathVariable("id") Long idEvent){
+    public List<GroupApp> getGroups(@PathVariable("id") Long idEvent){
          return questionnaireService.getGroupAppOfEventQuestionnaire(idEvent);
     }
     @GetMapping("/getQuestions/{idEvent}/{idGroup}")

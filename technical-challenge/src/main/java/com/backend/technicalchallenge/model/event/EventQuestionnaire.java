@@ -23,8 +23,10 @@ public class EventQuestionnaire {
     private Type type;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @JsonIgnore
     @ManyToOne
     private Questionnaire questionnaire;
+    @JsonIgnore
     @ManyToOne
     private Event event;
 
