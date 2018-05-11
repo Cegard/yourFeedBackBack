@@ -1,8 +1,8 @@
 
-Jenkinsfile (Declarative Pipeline)
 
 pipeline {
-	agent { docker { image 'maven:3.5.3' } }
+	agent any
+	tools { maven 'Maven'}
 	stages {
 		stage('build') {
 			steps {
