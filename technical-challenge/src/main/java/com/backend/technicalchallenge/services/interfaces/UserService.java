@@ -11,7 +11,7 @@ public interface UserService {
     List<UserApp> getAllUsers();
     List<UserApp> getActiveUsers();
     Optional<UserApp> setUser(UserApp userApp);
-    UserApp getUserById(Long id);
-    EvaluatedUser getEvaluatedUserById(Long idEvaluatedUser);
+    Optional<UserApp> getUserById(Long id);
+    Optional<EvaluatedUser> getEvaluatedUserById(Long idEvaluatedUser);
     List<EvaluatedUser> getEvaluatedUserForAnEvent(Long idEvent);
 }

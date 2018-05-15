@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserApp getUserById(Long id) {
-        return userRepository.findById(id).get();
+    public Optional<UserApp> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
 
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public EvaluatedUser getEvaluatedUserById(Long idEvaluatedUser) {
-        return evaluatedUserRepository.findById(idEvaluatedUser).get();
+    public Optional<EvaluatedUser> getEvaluatedUserById(Long idEvaluatedUser) {
+        return evaluatedUserRepository.findById(idEvaluatedUser);
     }
 
 

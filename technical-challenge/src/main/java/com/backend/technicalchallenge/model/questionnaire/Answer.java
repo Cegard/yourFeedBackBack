@@ -14,8 +14,6 @@ public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long Id;
-    private Long score;
     @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne

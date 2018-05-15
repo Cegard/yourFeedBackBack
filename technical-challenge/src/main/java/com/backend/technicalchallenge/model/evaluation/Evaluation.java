@@ -16,6 +16,9 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
+
+
+
 @Entity
 public class Evaluation {
 
