@@ -9,6 +9,5 @@ pipeline {
 				sh 'mvn -B -DskipTests clean package -f technical-challenge/pom.xml'
 			}
 		}
-		stage('')
 	}
 }
