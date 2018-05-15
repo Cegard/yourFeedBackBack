@@ -1,12 +1,14 @@
 pipeline {
 	agent any
-	tools { maven 'Maven'}
+	tools {
+		maven 'Maven'
+		jdk 'JDK-8'
+	}
 	stages {
-		stage('build') {
+		stage('Build') {
 			steps {
 				echo 'Building...'
-				sh 'cd technical-challenge'
-				sh 'mvn -B -DskipTests clean package'
+				sh 'mvn -B -DskipTests clean package -f technical-challenge/pom.xml'
 			}
 		}
 	}
