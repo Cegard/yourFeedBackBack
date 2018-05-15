@@ -11,6 +11,7 @@ import com.backend.technicalchallenge.model.questionnaire.Answer;
 import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.model.user.UserApp;
+import com.backend.technicalchallenge.persistance.AnswerRepository;
 import com.backend.technicalchallenge.persistance.EvaluatedUserRepository;
 import com.backend.technicalchallenge.persistance.EventRepository;
 import com.backend.technicalchallenge.persistance.UserRepository;
@@ -42,6 +43,9 @@ public class EvaluationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
 
     @GetMapping("/getEvaluations")
     public ResponseEntity<Object> getEvaluations(){
@@ -55,39 +59,63 @@ public class EvaluationController {
     }
 
     @PostMapping("/persistEvaluation")
-    public ResponseEntity<Object> persistEvaluation(@RequestBody Evaluation evaluation){
+    public ResponseEntity<Object> persistEvaluation(@RequestParam(name = "idEvent") Long idEvent,
+                                                    @RequestParam(name = "idEvaluator")Long idEvaluator,
+                                                    @RequestParam(name ="idEvaluatedUser") Long idEvaluatedUser,
+                                                    @RequestParam(name ="note") String note,
+                                                    @RequestBody List<Answer> answers){
 
-        Optional<Event> event = eventService.getEventId(evaluation.getEvent().getId());
-        Optional<UserApp> evaluator = userService.getUserById(evaluation.getUserEvaluator().getId());
-        Optional<EvaluatedUser> evaluatedUser = userService.getEvaluatedUserById(evaluation.getEvaluatedUser().getId());
+        Evaluation evaluation = new Evaluation();
+        Optional<Event> event = eventService.getEventId(idEvent);
+        Optional<UserApp> evaluator = userService.getUserById(idEvaluator);
+        Optional<EvaluatedUser> evaluatedUser = userService.getEvaluatedUserById(idEvaluatedUser);
 
 
         if(event.isPresent() && evaluatedUser.isPresent() && evaluatedUser.isPresent() ){
-            System.out.println("here");
+
             evaluation.setEvent(event.get());
-            System.out.println("here");
             evaluation.setDate(new Date());
             evaluation.setStatus(Status.ACTIVE);
-            System.out.println("here");
             evaluation.setUserEvaluator(evaluator.get());
-            System.out.println("here");
             evaluation.setEvaluatedUser(evaluatedUser.get());
-            System.out.println("here");
+            evaluation.setNote(note);
             evaluation.setType(Type.USER);
-            System.out.println("here");
-            System.out.println(evaluation.toString());
-            evaluation.getAnswers().forEach(answer -> {
-                System.out.println("here");
-                answer.setQuestion(questionnaireService.getQuestionById(answer.getQuestion().getId()).get());
-
-                answer.setStatus(Status.ACTIVE);
-            });
-            System.out.println("here");
-            System.out.println(evaluation.toString());
-
             evaluationService.saveEvaluation(evaluation);
-            System.out.println("here");
-            ResponseEntity<Object> result = evaluationService.getEvaluations()!=null? new ResponseEntity<>(evaluation, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
+            evaluation = evaluationService.getEvaluation(evaluation.getId()).get();
+            Evaluation finalEvaluation = evaluation;
+            answers.forEach(answer -> {
+                System.out.println(answer.getScore());
+                answer.setStatus(Status.ACTIVE);
+                answer.setQuestion(questionnaireService.getQuestionById(answer.getQuestion().getId()).get());
+                answer.setEvaluation(finalEvaluation);
+                answerRepository.save(answer);
+
+            });
+
+            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluation.getId())!=null? new ResponseEntity<>(evaluation.getId(), new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
+            return result;
+
+        }else{
+            return new ResponseEntity<>("Some of the id's isn't a valid one", new HttpHeaders(), HttpStatus.CONFLICT);
+        }
+
+    }
+
+    @PostMapping("/persistEvaluationGroupComments")
+    public ResponseEntity<Object> persistEvaluation(@RequestParam(name = "idEvaluation") Long idEvaluation,
+                                                    @RequestBody List<GroupComment> groupComments){
+
+        Optional<Evaluation> evaluation = evaluationService.getEvaluation(idEvaluation);
+
+        if(evaluation.isPresent()){
+
+            groupComments.forEach(groupComment -> {
+                groupComment.setStatus(Status.ACTIVE);
+                groupComment.setEvaluation(evaluation.get());
+            });
+
+            evaluationService.saveEvaluation(evaluation.get());
+            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluation.get().getId())!=null? new ResponseEntity<>(evaluation, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
             return result;
 
         }else{

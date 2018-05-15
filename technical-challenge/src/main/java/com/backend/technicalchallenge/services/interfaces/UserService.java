@@ -1,6 +1,7 @@
 package com.backend.technicalchallenge.services.interfaces;
 
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+import com.backend.technicalchallenge.model.event.Event;
 import com.backend.technicalchallenge.model.user.UserApp;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface UserService {
     Optional<UserApp> getUserById(Long id);
     Optional<EvaluatedUser> getEvaluatedUserById(Long idEvaluatedUser);
     List<EvaluatedUser> getEvaluatedUserForAnEvent(Long idEvent);
+
+
+
 }

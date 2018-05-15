@@ -10,6 +10,7 @@ public interface EvaluationService {
     boolean saveEvaluation(Evaluation evaluation);
     List<Evaluation> getEvaluations();
     Optional<Evaluation> getEvaluationById(Long idEvaluation);
+    Optional<Evaluation> getEvaluation(Long  idEvaluation);
 
 
 }

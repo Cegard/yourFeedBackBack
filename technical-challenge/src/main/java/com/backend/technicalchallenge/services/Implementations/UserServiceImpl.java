@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
         return evaluatedUserRepository.findAllByEventAndStatus(event, Status.ACTIVE);
     }
 
+
     @Override
     public Optional<EvaluatedUser> getEvaluatedUserById(Long idEvaluatedUser) {
         return evaluatedUserRepository.findById(idEvaluatedUser);

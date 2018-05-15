@@ -33,4 +33,9 @@ public class EvaluationServiceImpl implements EvaluationService {
         return evaluationRepository.findById(idEvaluation);
     }
 
+    @Override
+    public Optional<Evaluation> getEvaluation(Long idEvaluation) {
+        return evaluationRepository.findById(idEvaluation);
+    }
+
 }
