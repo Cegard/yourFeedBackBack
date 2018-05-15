@@ -1,6 +1,7 @@
 package com.backend.technicalchallenge.services.interfaces;
 
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
+import com.backend.technicalchallenge.model.questionnaire.Answer;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +14,5 @@ public interface EvaluationService {
     Optional<Evaluation> getEvaluation(Long  idEvaluation);
 
 
+    Long persistEvaluation(Long idEvent, Long idEvaluator, Long idEvaluatedUser, String note, List<Answer> answers);
 }
