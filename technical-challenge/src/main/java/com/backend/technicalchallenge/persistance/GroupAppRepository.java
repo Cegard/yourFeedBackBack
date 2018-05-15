@@ -18,7 +18,7 @@ public interface GroupAppRepository extends PagingAndSortingRepository<GroupApp,
             "join questionnaire_question qq on q.id = qq.question_id\n" +
             "join event_questionnaire eq on qq.questionnaire_id = eq.questionnaire_id \n" +
             "where eq.event_id = :idEvent group by g.id  ",nativeQuery = true)
-    List<GroupApp> findByEvent(@Param("idEvent") Long idEVent);
+    List<GroupApp> findByEvent(@Param("idEvent") Long idEvent);
 
 
 }
