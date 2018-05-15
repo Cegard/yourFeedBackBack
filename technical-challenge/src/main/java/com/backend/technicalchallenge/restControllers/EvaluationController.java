@@ -34,20 +34,6 @@ public class EvaluationController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
-    @Autowired
-    private EventService eventService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private GroupCommentRepository groupCommentRepository;
-
-    @Autowired
-    private GroupAppRepository groupAppRepository;
 
 
     @GetMapping("/getEvaluations")
@@ -64,15 +50,15 @@ public class EvaluationController {
     @PostMapping("/persistEvaluation")
     public ResponseEntity<Object> persistEvaluation(@RequestParam(name = "idEvent") Long idEvent,
                                                     @RequestParam(name = "idEvaluator")Long idEvaluator,
-                                                    @RequestParam(name ="idEvaluatedUser") Long idEvaluatedUser,
-                                                    @RequestParam(name ="note") String note,
+                                                    @RequestParam(name = "idEvaluatedUser") Long idEvaluatedUser,
+                                                    @RequestParam(name = "note") String note,
                                                     @RequestBody List<Answer> answers){
 
         Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
 
         if(evaluationId != null){
 
-            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluationId)!=null? new ResponseEntity<>(evaluationId, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
+            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluationId)!=null? new ResponseEntity<>(evaluationId, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't saved it on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
             return result;
 
         }else{
@@ -85,26 +71,14 @@ public class EvaluationController {
     public ResponseEntity<Object> persistEvaluation(@RequestParam(name = "idEvaluation") Long idEvaluation,
                                                     @RequestBody List<GroupComment> groupComments){
 
-        Optional<Evaluation> evaluation = evaluationService.getEvaluation(idEvaluation);
+            boolean isPersisted = evaluationService.persistEvaluationGroupComments(idEvaluation, groupComments);
 
-        if(evaluation.isPresent()){
+            ResponseEntity<Object> result =  isPersisted ? new ResponseEntity<>("groupComments saved on database", new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
 
-            groupComments.forEach(groupComment -> {
-                groupComment.setStatus(Status.ACTIVE);
-                groupComment.setEvaluation(evaluation.get());
-                groupComment.setGroupApp(groupAppRepository.findById(groupComment.getGroupApp().getId()).get());
-                groupCommentRepository.save(groupComment);
-            });
+        return result;
 
-            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluation.get().getId())!=null? new ResponseEntity<>(evaluation, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
-            return result;
-
-        }else{
-            return new ResponseEntity<>("Some of the id's isn't a valid one", new HttpHeaders(), HttpStatus.CONFLICT);
-        }
 
     }
-
 
     @GetMapping("/getQuestionsGroups/{id}")
     public List<GroupApp> getGroups(@PathVariable("id") Long idEvent){
