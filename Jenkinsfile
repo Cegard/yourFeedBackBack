@@ -11,5 +11,11 @@ pipeline {
 				sh 'mvn -B -DskipTests clean package -f technical-challenge/pom.xml'
 			}
 		}
+		stage('Test') {
+			steps {
+				echo 'Testing...'
+				sh 'mvn clean test -f technical-challenge/pom.xml'
+			}
+		}
 	}
 }
