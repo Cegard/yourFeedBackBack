@@ -1,6 +1,7 @@
 package com.backend.technicalchallenge.services.interfaces;
 
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
+import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface EvaluationService {
 
 
     Long persistEvaluation(Long idEvent, Long idEvaluator, Long idEvaluatedUser, String note, List<Answer> answers);
+
+    boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments);
 }

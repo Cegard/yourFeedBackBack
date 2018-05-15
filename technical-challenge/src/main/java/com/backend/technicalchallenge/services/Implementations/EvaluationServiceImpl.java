@@ -4,12 +4,11 @@ import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.Type;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
+import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.event.Event;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
 import com.backend.technicalchallenge.model.user.UserApp;
-import com.backend.technicalchallenge.persistance.AnswerRepository;
-import com.backend.technicalchallenge.persistance.EvaluationRepository;
-import com.backend.technicalchallenge.persistance.EventRepository;
+import com.backend.technicalchallenge.persistance.*;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
 import com.backend.technicalchallenge.services.interfaces.EventService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
@@ -40,7 +39,11 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Autowired
     private QuestionnaireService questionnaireService;
 
+    @Autowired
+    private GroupAppRepository groupAppRepository;
 
+    @Autowired
+    private GroupCommentRepository groupCommentRepository;
 
 
     @Override
@@ -95,6 +98,27 @@ public class EvaluationServiceImpl implements EvaluationService {
             return finalEvaluation.getId();
         }else {
             return null;
+        }
+    }
+
+    @Override
+    public boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments) {
+
+        Optional<Evaluation> evaluation = getEvaluation(idEvaluation);
+
+        if (evaluation.isPresent()) {
+
+            groupComments.forEach(groupComment -> {
+                groupComment.setStatus(Status.ACTIVE);
+                groupComment.setEvaluation(evaluation.get());
+                groupComment.setGroupApp(groupAppRepository.findById(groupComment.getGroupApp().getId()).get());
+                groupCommentRepository.save(groupComment);
+            });
+
+            return true;
+
+        } else {
+            return false;
         }
     }
 
