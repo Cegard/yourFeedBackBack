@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -120,6 +121,11 @@ public class EvaluationServiceImpl implements EvaluationService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Map<String, Double> getScore(Long idEvaluation) {
+        return answerRepository.getScore(idEvaluation);
     }
 
 }

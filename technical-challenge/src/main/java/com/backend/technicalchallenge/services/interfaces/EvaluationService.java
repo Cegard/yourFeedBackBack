@@ -5,6 +5,7 @@ import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface EvaluationService {
@@ -18,4 +19,6 @@ public interface EvaluationService {
     Long persistEvaluation(Long idEvent, Long idEvaluator, Long idEvaluatedUser, String note, List<Answer> answers);
 
     boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments);
+
+    Map<String, Double> getScore(Long idEvaluation);
 }
