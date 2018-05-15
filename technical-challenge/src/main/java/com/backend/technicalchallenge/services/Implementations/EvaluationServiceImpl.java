@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -25,6 +26,16 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Override
     public List<Evaluation> getEvaluations() {
         return evaluationRepository.findAll();
+    }
+
+    @Override
+    public Optional<Evaluation> getEvaluationById(Long idEvaluation) {
+        return evaluationRepository.findById(idEvaluation);
+    }
+
+    @Override
+    public Optional<Evaluation> getEvaluation(Long idEvaluation) {
+        return evaluationRepository.findById(idEvaluation);
     }
 
 }

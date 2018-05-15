@@ -62,7 +62,7 @@ public class UserController {
 
     @GetMapping("/getUserById/{id}")
     public UserApp getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+        return userService.getUserById(id).get();
     }
 
     @GetMapping("/getEvaluatedUserByEventId/{id}")
@@ -71,7 +71,7 @@ public class UserController {
     }
     @GetMapping("/getEvaluatedUserById/{id}")
     public EvaluatedUser getEvaluatedUserById(@PathVariable("id") Long id) {
-        return userService.getEvaluatedUserById(id);
+        return userService.getEvaluatedUserById(id).get();
     }
 
 
