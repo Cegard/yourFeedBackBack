@@ -11,10 +11,7 @@ import com.backend.technicalchallenge.model.questionnaire.Answer;
 import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.model.user.UserApp;
-import com.backend.technicalchallenge.persistance.AnswerRepository;
-import com.backend.technicalchallenge.persistance.EvaluatedUserRepository;
-import com.backend.technicalchallenge.persistance.EventRepository;
-import com.backend.technicalchallenge.persistance.UserRepository;
+import com.backend.technicalchallenge.persistance.*;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
 import com.backend.technicalchallenge.services.interfaces.EventService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
@@ -46,6 +43,12 @@ public class EvaluationController {
     @Autowired
     private AnswerRepository answerRepository;
 
+    @Autowired
+    private GroupCommentRepository groupCommentRepository;
+
+    @Autowired
+    private GroupAppRepository groupAppRepository;
+
 
     @GetMapping("/getEvaluations")
     public ResponseEntity<Object> getEvaluations(){
@@ -65,35 +68,11 @@ public class EvaluationController {
                                                     @RequestParam(name ="note") String note,
                                                     @RequestBody List<Answer> answers){
 
-        Evaluation evaluation = new Evaluation();
-        Optional<Event> event = eventService.getEventId(idEvent);
-        Optional<UserApp> evaluator = userService.getUserById(idEvaluator);
-        Optional<EvaluatedUser> evaluatedUser = userService.getEvaluatedUserById(idEvaluatedUser);
 
+        Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
+        if(evaluationId != null){
 
-        if(event.isPresent() && evaluatedUser.isPresent() && evaluatedUser.isPresent() ){
-
-            evaluation.setEvent(event.get());
-            evaluation.setDate(new Date());
-            evaluation.setStatus(Status.ACTIVE);
-            evaluation.setUserEvaluator(evaluator.get());
-            evaluation.setEvaluatedUser(evaluatedUser.get());
-            evaluation.setNote(note);
-            evaluation.setType(Type.USER);
-            evaluationService.saveEvaluation(evaluation);
-            evaluation = evaluationService.getEvaluation(evaluation.getId()).get();
-            Evaluation finalEvaluation = evaluation;
-            System.out.println(answers.toString());
-            answers.forEach(answer -> {
-                System.out.println(answer.toString());
-                answer.setStatus(Status.ACTIVE);
-                answer.setQuestion(questionnaireService.getQuestionById(answer.getQuestion().getId()).get());
-                answer.setEvaluation(finalEvaluation);
-                answerRepository.save(answer);
-
-            });
-
-            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluation.getId())!=null? new ResponseEntity<>(evaluation.getId(), new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
+            ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluationId)!=null? new ResponseEntity<>(evaluationId, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
             return result;
 
         }else{
@@ -107,15 +86,16 @@ public class EvaluationController {
                                                     @RequestBody List<GroupComment> groupComments){
 
         Optional<Evaluation> evaluation = evaluationService.getEvaluation(idEvaluation);
-
+    
         if(evaluation.isPresent()){
 
             groupComments.forEach(groupComment -> {
                 groupComment.setStatus(Status.ACTIVE);
                 groupComment.setEvaluation(evaluation.get());
+                groupComment.setGroupApp(groupAppRepository.findById(groupComment.getGroupApp().getId()).get());
+                groupCommentRepository.save(groupComment);
             });
 
-            evaluationService.saveEvaluation(evaluation.get());
             ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluation.get().getId())!=null? new ResponseEntity<>(evaluation, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
             return result;
 
