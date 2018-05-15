@@ -1,21 +1,14 @@
 package com.backend.technicalchallenge.restControllers;
 
 
-import com.backend.technicalchallenge.model.Status;
-import com.backend.technicalchallenge.model.Type;
-import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
-import com.backend.technicalchallenge.model.event.Event;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
 import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
-import com.backend.technicalchallenge.model.user.UserApp;
-import com.backend.technicalchallenge.persistance.*;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
-import com.backend.technicalchallenge.services.interfaces.EventService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
-import com.backend.technicalchallenge.services.interfaces.UserService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -78,6 +71,15 @@ public class EvaluationController {
         return result;
 
 
+    }
+
+    @GetMapping("/getScore/{idEvaluation}")
+    public ResponseEntity<Object> getScore(@PathVariable("idEvaluation") Long idEvaluation){
+
+        Map<String, Double> answer = evaluationService.getScore(idEvaluation);
+        ResponseEntity<Object> result =  answer !=null ? new ResponseEntity<>(answer, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
+
+        return result;
     }
 
     @GetMapping("/getQuestionsGroups/{id}")
