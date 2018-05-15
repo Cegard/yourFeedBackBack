@@ -83,8 +83,9 @@ public class EvaluationController {
             evaluationService.saveEvaluation(evaluation);
             evaluation = evaluationService.getEvaluation(evaluation.getId()).get();
             Evaluation finalEvaluation = evaluation;
+            System.out.println(answers.toString());
             answers.forEach(answer -> {
-                System.out.println(answer.getScore());
+                System.out.println(answer.toString());
                 answer.setStatus(Status.ACTIVE);
                 answer.setQuestion(questionnaireService.getQuestionById(answer.getQuestion().getId()).get());
                 answer.setEvaluation(finalEvaluation);
