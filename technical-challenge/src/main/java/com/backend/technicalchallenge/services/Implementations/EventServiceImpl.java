@@ -20,6 +20,7 @@ public class EventServiceImpl implements EventService {
 
     public List<Event> getEvents() { return eventRepository.findAll(); }
 
+    @Override
     public Optional<Event> getEventId(Long id) {
         return eventRepository.findById(id);
     }
@@ -27,5 +28,7 @@ public class EventServiceImpl implements EventService {
     public List<Event> getEventsByStatusActive() {
             return eventRepository.findAllByStatus(Status.ACTIVE);
     }
+
+
 
 }

@@ -9,4 +9,5 @@ public interface EventService {
 
     Optional<Event> getEventId(Long id);
     List<Event> getEventsByStatusActive();
+
 }
