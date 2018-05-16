@@ -1,12 +1,13 @@
 package com.backend.technicalchallenge.model.DTO;
 
 import lombok.Data;
+import lombok.Value;
 import lombok.experimental.Accessors;
 
-@Data
-@Accessors(chain = true)
+@Value
 public class GroupAppDTO {
-    Long id;
-    String name;
-    Long score;
+    private Long id;
+    private String name;
+    private Long score;
+
 }

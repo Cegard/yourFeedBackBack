@@ -2,6 +2,7 @@ package com.backend.technicalchallenge.restControllers;
 
 
 import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
@@ -90,6 +91,11 @@ public class EvaluationController {
     @GetMapping("/getQuestions/{idEvent}/{idGroup}")
     public List<Question> getQuestionsByEvent(@PathVariable("idEvent") Long idEvent,@PathVariable("idGroup") Long idGroup){
         return questionnaireService.getQuestionsOfGroup(idEvent, idGroup);
+    }
+
+    @GetMapping("/getEvaluatedsUserById/{idUser}")
+    public List<EvaluatedUser> getEvaluatedsUserById(@PathVariable("idUser") Long idUser){
+        return evaluationService.getEvaluatedUserByUserApp(idUser);
     }
 
 

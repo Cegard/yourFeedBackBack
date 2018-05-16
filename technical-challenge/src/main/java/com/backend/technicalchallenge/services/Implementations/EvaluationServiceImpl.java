@@ -46,6 +46,9 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Autowired
     private GroupCommentRepository groupCommentRepository;
 
+    @Autowired
+    private EvaluatedUserRepository evaluatedUserRepository;
+
 
     @Override
     public boolean saveEvaluation(Evaluation evaluation) {
@@ -126,6 +129,12 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Override
     public List<GroupAppDTO> getScore(Long idEvaluation) {
         return answerRepository.getScore(idEvaluation);
+    }
+
+    @Override
+    public List<EvaluatedUser> getEvaluatedUserByUserApp(Long idUser) {
+        Optional<UserApp> userApp = userService.getUserById(idUser);
+        return evaluatedUserRepository.findByUserApp(userApp);
     }
 
 }

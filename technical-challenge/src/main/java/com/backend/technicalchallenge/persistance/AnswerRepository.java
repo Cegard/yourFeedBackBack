@@ -16,7 +16,7 @@ public interface AnswerRepository extends PagingAndSortingRepository<Answer, Lon
 
     List<Answer> findAllByStatus(Status status);
 
-    @Query(value = "SELECT gapp.name as name_group, (sum(ans.score)/count(gapp.id)) as score \n" +
+    @Query(value = "SELECT gapp.id as id, gapp.name as name, (sum(ans.score)/count(gapp.id)) as score \n" +
             "\tFROM answer ans join question q on q.id = ans.question_id join group_app gapp on q.group_app_id = gapp.id where ans.evaluation_id = :idEvaluation GROUP BY 1 \n", nativeQuery = true)
     List<GroupAppDTO> getScore(@Param("idEvaluation") Long idEvaluation);
 
