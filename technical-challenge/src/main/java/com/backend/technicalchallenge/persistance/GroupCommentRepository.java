@@ -11,8 +11,7 @@ public interface GroupCommentRepository  extends PagingAndSortingRepository<Grou
 
     Optional<GroupComment> findById(Long id);
     List<GroupComment> findAll();
-
-
+    List<GroupComment> findByGroupApp_IdAndAndEvaluation_Id(Long idGroupApp, Long idEvaluation);
 
 
 }

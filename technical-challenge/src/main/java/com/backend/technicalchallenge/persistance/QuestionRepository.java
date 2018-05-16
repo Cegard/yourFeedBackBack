@@ -14,13 +14,9 @@ public interface QuestionRepository extends PagingAndSortingRepository<Question,
     @Query(value = "SELECT q.* FROM question q\n" +
             "join questionnaire_question qq on q.id = qq.question_id\n" +
             "join event_questionnaire eq on qq.questionnaire_id = eq.questionnaire_id \n" +
-            "where eq.event_id = :idEvent and q.group_app_id = :idGroup order by q.group_app_id ",nativeQuery = true)
+            "where eq.event_id = :idEvent and q.group_app_id = :idGroup order by q.group_app_id ", nativeQuery = true)
     List<Question> findByEventAndGroupApp(@Param("idEvent") Long idEVent, @Param("idGroup") Long idGroup);
 
     Optional<Question> findById(Long id);
-
-    @Query(value = "select gcom from group_comment gcom where gcom.group_app_id  = :idGroupApp and gcom.evaluation_id = :idEvaluation ", nativeQuery = true)
-    List<GroupComment> findGroupCommentByQuestionAndEvaluation(@Param("idEvaluation")Long idEvaluation, @Param );
-
 
 }
