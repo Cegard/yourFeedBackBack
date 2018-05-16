@@ -1,7 +1,6 @@
 package com.backend.technicalchallenge.services.interfaces;
 
-import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
-import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
@@ -21,7 +20,6 @@ public interface EvaluationService {
 
     boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments);
 
-    List<GroupAppDTO> getScore(Long idEvaluation);
 
-    List<EvaluatedUser> getEvaluatedUserByUserApp(Long idUser);
+    List<Object> getScore(Long idEvaluation);
 }
