@@ -30,7 +30,7 @@ public class EvaluationController {
 
 
     @GetMapping("/getAverageForQuestion")
-    public ResponseEntity getAverage(@RequestParam("idEvluation") Long idEvaluation){
+    public ResponseEntity getAverage(@RequestParam("idEvaluation") Long idEvaluation){
 
         List<Object> result = evaluationService.getAverage(idEvaluation);
 
