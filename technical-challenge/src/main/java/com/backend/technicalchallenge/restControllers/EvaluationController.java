@@ -1,6 +1,8 @@
 package com.backend.technicalchallenge.restControllers;
 
 
+
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
@@ -46,8 +48,8 @@ public class EvaluationController {
                                                     @RequestParam(name = "note") String note,
                                                     @RequestBody List<Answer> answers){
 
-        Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
 
+        Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
         if(evaluationId != null){
 
             ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluationId)!=null? new ResponseEntity<>(evaluationId, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't saved it on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
@@ -88,6 +90,11 @@ public class EvaluationController {
     @GetMapping("/getQuestions/{idEvent}/{idGroup}")
     public List<Question> getQuestionsByEvent(@PathVariable("idEvent") Long idEvent,@PathVariable("idGroup") Long idGroup){
         return questionnaireService.getQuestionsOfGroup(idEvent, idGroup);
+    }
+
+    @GetMapping("/getEvaluatedsUserById/{idUser}")
+    public List<EvaluatedUser> getEvaluatedsUserById(@PathVariable("idUser") Long idUser){
+        return evaluationService.getEvaluatedUserByUserApp(idUser);
     }
 
 

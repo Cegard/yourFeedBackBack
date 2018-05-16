@@ -20,6 +20,7 @@ public class GroupApp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private String name;
+    private String description;
     @Enumerated(EnumType.STRING)
     private Status status;
     @JsonIgnore

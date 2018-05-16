@@ -1,7 +1,9 @@
 package com.backend.technicalchallenge.model.DTO;
 
 import lombok.Data;
+import lombok.Value;
 import lombok.experimental.Accessors;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
