@@ -1,7 +1,8 @@
 package com.backend.technicalchallenge.restControllers;
 
 
-import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
+
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
@@ -9,7 +10,6 @@ import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,8 +48,8 @@ public class EvaluationController {
                                                     @RequestParam(name = "note") String note,
                                                     @RequestBody List<Answer> answers){
 
-        Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
 
+        Long evaluationId = evaluationService.persistEvaluation(idEvent, idEvaluator, idEvaluatedUser, note, answers);
         if(evaluationId != null){
 
             ResponseEntity<Object> result =  evaluationService.getEvaluation(evaluationId)!=null? new ResponseEntity<>(evaluationId, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't saved it on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
@@ -77,7 +77,7 @@ public class EvaluationController {
     @GetMapping("/getScore/{idEvaluation}")
     public ResponseEntity<Object> getScore(@PathVariable("idEvaluation") Long idEvaluation){
 
-        List<GroupAppDTO> answer = evaluationService.getScore(idEvaluation);
+        List<Object> answer = evaluationService.getScore(idEvaluation);
         ResponseEntity<Object> result =  answer !=null ? new ResponseEntity<>(answer, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
 
         return result;
@@ -90,6 +90,11 @@ public class EvaluationController {
     @GetMapping("/getQuestions/{idEvent}/{idGroup}")
     public List<Question> getQuestionsByEvent(@PathVariable("idEvent") Long idEvent,@PathVariable("idGroup") Long idGroup){
         return questionnaireService.getQuestionsOfGroup(idEvent, idGroup);
+    }
+
+    @GetMapping("/getEvaluatedsUserById/{idUser}")
+    public List<EvaluatedUser> getEvaluatedsUserById(@PathVariable("idUser") Long idUser){
+        return evaluationService.getEvaluatedUserByUserApp(idUser);
     }
 
 
