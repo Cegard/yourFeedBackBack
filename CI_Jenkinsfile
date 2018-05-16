@@ -18,4 +18,12 @@ pipeline {
 			}
 		}
 	}
+	post {
+        always {
+            junit '**/target/surefire-reports/*.xml'
+        }
+        failure {
+            mail to: cegard689@gmail.com, subject: 'The Pipeline failed :('
+        }
+    }
 }
