@@ -1,6 +1,7 @@
 package com.backend.technicalchallenge.restControllers;
 
 
+import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
@@ -76,7 +77,7 @@ public class EvaluationController {
     @GetMapping("/getScore/{idEvaluation}")
     public ResponseEntity<Object> getScore(@PathVariable("idEvaluation") Long idEvaluation){
 
-        Map<String, Double> answer = evaluationService.getScore(idEvaluation);
+        List<GroupAppDTO> answer = evaluationService.getScore(idEvaluation);
         ResponseEntity<Object> result =  answer !=null ? new ResponseEntity<>(answer, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
 
         return result;
