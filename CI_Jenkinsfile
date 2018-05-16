@@ -8,14 +8,14 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo 'Building...'
-				sh 'mvn clean'
+				sh 'mvn clean -f technical-challenge/pom.xml'
 				sh 'mvn -B -DskipTests package -f technical-challenge/pom.xml'
 			}
 		}
 		stage('Test') {
 			steps {
 				echo 'Testing...'
-				sh 'mvn clean'
+				sh 'mvn clean -f technical-challenge/pom.xml'
 				sh 'mvn -B -Dspring.profiles.active=prod -f technical-challenge/pom.xml test'
 			}
 		}
