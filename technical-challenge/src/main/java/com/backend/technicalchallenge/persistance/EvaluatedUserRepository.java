@@ -15,6 +15,7 @@ public interface EvaluatedUserRepository extends PagingAndSortingRepository<Eval
     Optional<EvaluatedUser> findById(Long id);
     List<EvaluatedUser> findAllByEventAndStatus(Optional<Event> eventId, Status status);
     List<EvaluatedUser> findAll();
+    List<EvaluatedUser> findByUserApp(Optional<UserApp> userApp);
 
 
 }
