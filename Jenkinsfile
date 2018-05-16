@@ -8,7 +8,7 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo 'Building...'
-				sh 'mvn clean package -f technical-challenge/pom.xml'
+				sh 'mvn -B -DskipTests clean package -f technical-challenge/pom.xml'
 			}
 		}
 	}
