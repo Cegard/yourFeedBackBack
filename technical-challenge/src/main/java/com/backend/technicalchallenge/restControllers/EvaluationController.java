@@ -1,7 +1,6 @@
 package com.backend.technicalchallenge.restControllers;
 
 
-import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
@@ -10,7 +9,6 @@ import com.backend.technicalchallenge.model.questionnaire.GroupApp;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.services.interfaces.EvaluationService;
 import com.backend.technicalchallenge.services.interfaces.QuestionnaireService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
