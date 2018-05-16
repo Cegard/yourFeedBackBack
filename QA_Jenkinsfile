@@ -15,7 +15,7 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				echo 'Deploying to QA environment...'
-				sh 'scp **/target/*.jar ec2-user@10.0.2.31/home/ec2-user'
+				sh 'scp **/target/*.jar ec2-user@10.0.2.31:/home/ec2-user'
 				sh 'ssh ec2-user@10.0.2.31 pkill java'
 			}
 		}
