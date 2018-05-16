@@ -14,7 +14,7 @@ pipeline {
 		stage('Test') {
 			steps {
 				echo 'Testing...'
-				sh 'mvn -B  -Dspring.profiles.active=prod clean test -f technical-challenge/pom.xml'
+				sh 'mvn -B -Dspring.profiles.active=prod clean test -f technical-challenge/pom.xml'
 			}
 		}
 	}
