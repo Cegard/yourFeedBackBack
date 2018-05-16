@@ -137,4 +137,9 @@ public class EvaluationServiceImpl implements EvaluationService {
         return evaluatedUserRepository.findByUserApp(userApp);
     }
 
+    @Override
+    public List<Object> getAverage(Long idEvaluation) {
+        return answerRepository.getAverage(idEvaluation);
+    }
+
 }

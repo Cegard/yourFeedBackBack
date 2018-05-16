@@ -29,6 +29,19 @@ public class EvaluationController {
     private QuestionnaireService questionnaireService;
 
 
+    @GetMapping("/getAverageForQuestion")
+    public ResponseEntity getAverage(@RequestParam("idEvluation") Long idEvaluation){
+
+        List<Object> result = evaluationService.getAverage(idEvaluation);
+
+
+        if(!result.isEmpty()){
+            return new ResponseEntity<>(result, new HttpHeaders(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("There's no evaluations on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
 
     @GetMapping("/getEvaluations")
     public ResponseEntity<Object> getEvaluations(){

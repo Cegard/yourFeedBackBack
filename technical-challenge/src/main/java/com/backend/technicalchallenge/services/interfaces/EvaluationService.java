@@ -25,4 +25,5 @@ public interface EvaluationService {
     List<Object> getScore(Long idEvaluation);
     List<EvaluatedUser> getEvaluatedUserByUserApp(Long idUser);
 
+    List<Object> getAverage(Long idEvaluation);
 }
