@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.persistance;
 
+import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Question;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -17,6 +18,9 @@ public interface QuestionRepository extends PagingAndSortingRepository<Question,
     List<Question> findByEventAndGroupApp(@Param("idEvent") Long idEVent, @Param("idGroup") Long idGroup);
 
     Optional<Question> findById(Long id);
+
+    @Query(value = "select gcom from group_comment gcom where gcom.group_app_id  = :idGroupApp and gcom.evaluation_id = :idEvaluation ", nativeQuery = true)
+    List<GroupComment> findGroupCommentByQuestionAndEvaluation(@Param("idEvaluation")Long idEvaluation, @Param );
 
 
 }
