@@ -77,7 +77,7 @@ public class EvaluationController {
     @GetMapping("/getScore/{idEvaluation}")
     public ResponseEntity<Object> getScore(@PathVariable("idEvaluation") Long idEvaluation){
 
-        List<GroupAppDTO> answer = evaluationService.getScore(idEvaluation);
+        List<Object> answer = evaluationService.getScore(idEvaluation);
         ResponseEntity<Object> result =  answer !=null ? new ResponseEntity<>(answer, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
 
         return result;

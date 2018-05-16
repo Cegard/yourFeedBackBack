@@ -1,6 +1,5 @@
 package com.backend.technicalchallenge.services.Implementations;
 
-import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
 import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.Type;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
@@ -124,8 +123,9 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public List<GroupAppDTO> getScore(Long idEvaluation) {
-        return answerRepository.getScore(idEvaluation);
+    public List<Object> getScore(Long idEvaluation) {
+
+        return  answerRepository.getScore(idEvaluation);
     }
 
 }
