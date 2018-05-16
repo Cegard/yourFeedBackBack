@@ -1,11 +1,11 @@
 package com.backend.technicalchallenge.services.interfaces;
 
+import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import com.backend.technicalchallenge.model.questionnaire.Answer;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface EvaluationService {
@@ -20,5 +20,5 @@ public interface EvaluationService {
 
     boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments);
 
-    Map<String, Double> getScore(Long idEvaluation);
+    List<GroupAppDTO> getScore(Long idEvaluation);
 }

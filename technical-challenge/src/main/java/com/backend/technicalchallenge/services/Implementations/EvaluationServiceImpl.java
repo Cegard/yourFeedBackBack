@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.services.Implementations;
 
+import com.backend.technicalchallenge.model.DTO.GroupAppDTO;
 import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.Type;
 import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -124,7 +124,7 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public Map<String, Double> getScore(Long idEvaluation) {
+    public List<GroupAppDTO> getScore(Long idEvaluation) {
         return answerRepository.getScore(idEvaluation);
     }
 
