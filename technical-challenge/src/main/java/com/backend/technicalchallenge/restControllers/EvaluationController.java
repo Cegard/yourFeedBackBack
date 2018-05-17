@@ -30,9 +30,9 @@ public class EvaluationController {
 
 
     @GetMapping("/getAverageForQuestion")
-    public ResponseEntity getAverage(@RequestParam("idEvluation") Long idEvaluation){
+    public ResponseEntity getAverage(@RequestParam("idEvent") Long idEvent,@RequestParam("idUser") Long idUser, @RequestParam("idGroup") Long idGroup){
 
-        List<Object> result = evaluationService.getAverage(idEvaluation);
+        List<Object> result = evaluationService.getAverage(idEvent,idUser,idGroup);
 
 
         if(!result.isEmpty()){
@@ -87,10 +87,10 @@ public class EvaluationController {
 
     }
 
-    @GetMapping("/getScore/{idEvaluation}")
-    public ResponseEntity<Object> getScore(@PathVariable("idEvaluation") Long idEvaluation){
+    @GetMapping("/getScore")
+    public ResponseEntity<Object> getScore(@RequestParam("idEvent") Long idEvent,@RequestParam("idUser") Long idUser){
 
-        List<Object> answer = evaluationService.getScore(idEvaluation);
+        List<Object> answer = evaluationService.getScore(idEvent,idUser);
         ResponseEntity<Object> result =  answer !=null ? new ResponseEntity<>(answer, new HttpHeaders(), HttpStatus.OK): new ResponseEntity<>("couldn't be saved on database", new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);;
 
         return result;
