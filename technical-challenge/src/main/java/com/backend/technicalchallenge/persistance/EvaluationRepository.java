@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.persistance;
 
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
 import com.backend.technicalchallenge.model.evaluation.Evaluation;
 import com.backend.technicalchallenge.model.evaluation.GroupComment;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,7 @@ public interface EvaluationRepository extends PagingAndSortingRepository<Evaluat
 
     List<Evaluation> findAll();
     Optional<Evaluation> findById(Long id);
+    List<Evaluation> findByEvaluatedUser(Optional<EvaluatedUser> evaluatedUser);
 
 
 
