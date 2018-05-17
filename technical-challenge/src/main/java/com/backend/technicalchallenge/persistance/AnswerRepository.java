@@ -14,14 +14,22 @@ public interface AnswerRepository extends PagingAndSortingRepository<Answer, Lon
     List<Answer> findAllByStatus(Status status);
 
 
-    @Query(value = "SELECT ans.id, gapp.name , (sum(ans.score)/count(gapp.id))  \n" +
-            "\tFROM answer ans join question q on q.id = ans.question_id join group_app gapp on q.group_app_id = gapp.id where ans.evaluation_id = :idEvaluation GROUP BY 1,2 \n", nativeQuery = true)
-    List<Object> getScore(@Param("idEvaluation") Long idEvaluation);
+    @Query(value = "SELECT gapp.id, gapp.name, gapp.description , avg(ans.score)  \n" +
+            "\tFROM answer ans " +
+            "join question q on ans.question_id = q.id " +
+            "join group_app gapp on q.group_app_id = gapp.id " +
+            "join evaluation ev on ev.id = ans.evaluation_id " +
+            "join evaluated_user evus on ev.evaluated_user_id = evus.id " +
+            "where ev.event_id = :idEvent and evus.user_app_id = :idUser GROUP BY 1,2,3 \n", nativeQuery = true)
+    List<Object> getScore(@Param("idEvent") Long idEvent,@Param("idUser") Long idUser);
 
     @Query(value = "SELECT gapp.name, q.question, avg(ans.score) from answer ans " +
             "join question q on ans.question_id = q.id " +
-            "join group_app gapp on q.group_app_id = gapp.id where ans.evaluation_id = :idEvaluation group by q.id, gapp.id" , nativeQuery = true)
-    List<Object> getAverage(@Param("idEvaluation") Long idEvaluation);
+            "join group_app gapp on q.group_app_id = gapp.id " +
+            "join evaluation ev on ev.id = ans.evaluation_id " +
+            "join evaluated_user evus on ev.evaluated_user_id = evus.id " +
+            " where ev.event_id = :idEvent and evus.user_app_id = :idUser and gapp.id = :idGroup group by q.id, gapp.id" , nativeQuery = true)
+    List<Object> getAverage(@Param("idEvent") Long idEvent,@Param("idUser") Long idUser,@Param("idGroup") Long idGroup);
 
 
 }
