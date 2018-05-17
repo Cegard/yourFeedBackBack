@@ -110,6 +110,17 @@ public class EvaluationController {
         return evaluationService.getEvaluatedUserByUserApp(idUser);
     }
 
+    @GetMapping("/getEvaluationsByEvaluatedUser")
+    public List<Evaluation> getEvaluationsByEvaluatedUser(@RequestParam("idEvaluatedUser") Long idEvaluatedUser){
+        List<Evaluation> answer = evaluationService.getEvaluationByEvaluatedUser(idEvaluatedUser);
+        return answer;
+    }
+
+    @GetMapping("/getGroupCommentByGroupAppIdAndEvaluatedUser")
+    public List<GroupComment> getGroupCommentByGroupAppIdAndEvaluatedUser(@RequestParam("idGroupApp") Long idGroupApp,@RequestParam("idEvaluatedUser") Long idEvaluatedUser){
+        List<GroupComment> answer = evaluationService.getGroupCommentByGroupAppIdAndEvaluatedUser(idGroupApp,idEvaluatedUser);
+        return answer;
+    }
 
 
 

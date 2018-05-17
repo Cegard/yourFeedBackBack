@@ -142,4 +142,15 @@ public class EvaluationServiceImpl implements EvaluationService {
         return answerRepository.getAverage(idEvent,idUser,idGroup);
     }
 
+    @Override
+    public List<Evaluation> getEvaluationByEvaluatedUser(Long idEvaluatedUser) {
+        Optional<EvaluatedUser> evaluatedUser = evaluatedUserRepository.findById(idEvaluatedUser);
+        return evaluationRepository.findByEvaluatedUser(evaluatedUser);
+    }
+
+    @Override
+    public List<GroupComment> getGroupCommentByGroupAppIdAndEvaluatedUser(Long idGroup, Long idEvaluatedUser) {
+        return groupCommentRepository.findByGroupAppIdAndAndEvaluatedUserId(idGroup,idEvaluatedUser);
+    }
+
 }
