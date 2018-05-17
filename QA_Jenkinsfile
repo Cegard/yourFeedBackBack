@@ -24,7 +24,7 @@ pipeline {
 			steps{
 				input "Please confirm after you have ran the needed manual tests."
 				sh 'ssh ec2-user@10.0.2.31 sh yourFeedbackTests/projectUpdate.sh'
-				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests && mvn clean install'
+				sh 'ssh ec2-user@10.0.2.31 mvn -f /home/ec2-user/yourFeedbackTests clean install'
 				publishHTML (target: [
 					reportDir: 'target/site/serenity',
 					reportFiles: 'index.html',
