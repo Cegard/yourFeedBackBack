@@ -18,8 +18,18 @@ pipeline {
 				sh 'ssh ec2-user@10.0.2.31 sh killJava.sh'
 				sh 'scp **/target/*.jar ec2-user@10.0.2.31:/home/ec2-user'
 				sh 'ssh ec2-user@10.0.2.31 java -Dspring.profiles.active=prod -jar technical-challenge-0.0.1-SNAPSHOT.jar >> ~/log.log 2>&1 &'
+			}
+		}
+		stage('TESTS') {
+			steps{
+				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests mvn clean install'
 				input "Please confirm after you have ran the needed manual tests."
 				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests && git pull origin master'
+				publishHTML (target: [
+					reportDir: '**/target/site/serenity',
+					reportFiles: 'index.html',
+					reportName: "API tests report"
+				])
 			}
 		}
 	}
