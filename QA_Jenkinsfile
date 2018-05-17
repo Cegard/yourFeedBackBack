@@ -15,8 +15,11 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				echo 'Deploying to QA environment...'
-				sh 'scp **/target/*.jar ec2-user@10.0.2.31:/home/ec2-user'
 				sh 'ssh ec2-user@10.0.2.31 sh killJava.sh'
+				sh 'scp **/target/*.jar ec2-user@10.0.2.31:/home/ec2-user'
+				sh 'ssh ec2-user@10.0.2.31 java -Dspring.profiles.active=prod -jar technical-challenge-0.0.1-SNAPSHOT.jar >> ~/log.log 2>&1 &'
+				input "Please confirm after you have ran the needed manual tests."
+				sh 'ssh ec2-user@10.0.2.31 cd your_feedback_tests && git pull origin master'
 			}
 		}
 	}
