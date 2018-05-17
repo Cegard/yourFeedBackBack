@@ -27,4 +27,9 @@ public interface EvaluationService {
     List<EvaluatedUser> getEvaluatedUserByUserApp(Long idUser);
 
     List<Object> getAverage(Long idEvent,Long idUser,Long idGroup);
+
+    List<Evaluation> getEvaluationByEvaluatedUser(Long idEvaluatedUser);
+
+    List<GroupComment> getGroupCommentByGroupAppIdAndEvaluatedUser(Long idGroup,Long idEvaluatedUser);
+
 }
