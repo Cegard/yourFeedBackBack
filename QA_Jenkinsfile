@@ -26,7 +26,7 @@ pipeline {
 				input "Please confirm after you have ran the needed manual tests."
 				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests && git pull origin master'
 				publishHTML (target: [
-					reportDir: '**/target/site/serenity',
+					reportDir: 'target/site/serenity',
 					reportFiles: 'index.html',
 					reportName: "API tests report"
 				])
