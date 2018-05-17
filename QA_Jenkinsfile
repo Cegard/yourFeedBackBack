@@ -22,9 +22,9 @@ pipeline {
 		}
 		stage('TESTS') {
 			steps{
-				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests mvn clean install'
 				input "Please confirm after you have ran the needed manual tests."
-				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests && git pull origin master'
+				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests && sh projectUpdate.sh'
+				sh 'ssh ec2-user@10.0.2.31 cd yourFeedbackTests mvn clean install'
 				publishHTML (target: [
 					reportDir: 'target/site/serenity',
 					reportFiles: 'index.html',
