@@ -126,9 +126,9 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public List<Object> getScore(Long idEvaluation) {
+    public List<Object> getScore(Long idEvent, Long idUser) {
 
-        return  answerRepository.getScore(idEvaluation);
+        return  answerRepository.getScore(idEvent,idUser);
     }
 
     @Override
@@ -138,8 +138,19 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public List<Object> getAverage(Long idEvaluation) {
-        return answerRepository.getAverage(idEvaluation);
+    public List<Object> getAverage(Long idEvent,Long idUser,Long idGroup) {
+        return answerRepository.getAverage(idEvent,idUser,idGroup);
+    }
+
+    @Override
+    public List<Evaluation> getEvaluationByEvaluatedUser(Long idEvaluatedUser) {
+        Optional<EvaluatedUser> evaluatedUser = evaluatedUserRepository.findById(idEvaluatedUser);
+        return evaluationRepository.findByEvaluatedUser(evaluatedUser);
+    }
+
+    @Override
+    public List<GroupComment> getGroupCommentByGroupAppIdAndEvaluatedUser(Long idGroup, Long idEvaluatedUser) {
+        return groupCommentRepository.findByGroupAppIdAndAndEvaluatedUserId(idGroup,idEvaluatedUser);
     }
 
 }

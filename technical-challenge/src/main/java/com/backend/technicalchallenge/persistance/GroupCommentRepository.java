@@ -12,8 +12,8 @@ public interface GroupCommentRepository  extends PagingAndSortingRepository<Grou
 
     Optional<GroupComment> findById(Long id);
     List<GroupComment> findAll();
-    @Query(value = "SELECT gcom.* FROM group_comment gcom where gcom.evaluation_id = :idEvaluation and gcom.group_app_id = :idGroupApp", nativeQuery = true)
-    List<GroupComment> findByGroupApp_IdAndAndEvaluation_Id(@Param("idGroupApp")Long idGroupApp, @Param("idEvaluation") Long idEvaluation);
+    @Query(value = "SELECT gcom.* FROM group_comment gcom join evaluation ev on gcom.evaluation_id = ev.id where ev.evaluated_user_id = :idEvalutedUser and gcom.group_app_id = :idGroupApp", nativeQuery = true)
+    List<GroupComment> findByGroupAppIdAndAndEvaluatedUserId(@Param("idGroupApp")Long idGroupApp, @Param("idEvalutedUser") Long idEvalutedUser);
 
 
 }
