@@ -22,8 +22,14 @@ public interface EvaluationService {
     boolean persistEvaluationGroupComments(Long idEvaluation, List<GroupComment> groupComments);
 
 
-    List<Object> getScore(Long idEvaluation);
+    List<Object> getScore(Long idEvent,Long idUser);
+
     List<EvaluatedUser> getEvaluatedUserByUserApp(Long idUser);
 
-    List<Object> getAverage(Long idEvaluation);
+    List<Object> getAverage(Long idEvent,Long idUser,Long idGroup);
+
+    List<Evaluation> getEvaluationByEvaluatedUser(Long idEvaluatedUser);
+
+    List<GroupComment> getGroupCommentByGroupAppIdAndEvaluatedUser(Long idGroup,Long idEvaluatedUser);
+
 }
