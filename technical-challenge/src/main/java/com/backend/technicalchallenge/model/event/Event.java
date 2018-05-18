@@ -20,6 +20,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    private String name;
     private String description;
     @Enumerated(EnumType.STRING)
     private Status status;

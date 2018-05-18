@@ -1,4 +1,4 @@
-package com.backend.technicalchallenge.services;
+package com.backend.technicalchallenge.services.interfaces;
 
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.model.user.Role;

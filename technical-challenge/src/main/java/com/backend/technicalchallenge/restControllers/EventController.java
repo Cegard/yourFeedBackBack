@@ -2,7 +2,7 @@ package com.backend.technicalchallenge.restControllers;
 
 
 import com.backend.technicalchallenge.model.event.Event;
-import com.backend.technicalchallenge.services.EventServiceImpl;
+import com.backend.technicalchallenge.services.Implementations.EventServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +24,14 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/EventController/getEvents")
+    @GetMapping("/getEvents")
     public List<Event> getEvents() {
         return eventService.getEventsByStatusActive();
     }
 
-    @GetMapping("/EventController/getEventById/{id}")
+    @GetMapping("/getEventById/{id}")
     public Optional<Event> getUserByid(@PathVariable("id") Long id) {
         return eventService.getEventId(id);
     }
+
 }

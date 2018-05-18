@@ -1,5 +1,6 @@
 package com.backend.technicalchallenge.persistance;
 
+import com.backend.technicalchallenge.model.Status;
 import com.backend.technicalchallenge.model.event.Event;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -10,6 +11,6 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
 
     List<Event> findAll();
     Optional<Event> findById(Long id);
-    List<Event> findAllByStatus(String status);
+    List<Event> findAllByStatus(Status status);
 
 }

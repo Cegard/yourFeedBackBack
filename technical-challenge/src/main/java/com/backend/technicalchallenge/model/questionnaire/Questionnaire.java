@@ -25,8 +25,10 @@ public class Questionnaire {
     private String description;
     //It's written on database as 'note'
     private String furtherComments;
+    @Enumerated(EnumType.STRING)
     private Type type;
     private Date creationDate;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @JsonIgnore
     @OneToMany(mappedBy = "questionnaire")
