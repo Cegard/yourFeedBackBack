@@ -1,0 +1,24 @@
+pipeline {
+	agent any
+	tools {
+		maven 'Maven'
+		jdk 'JDK-8'
+	}
+	stages {
+		stage('Build') {
+			steps {
+				echo 'Building...'
+				sh 'mvn clean -f technical-challenge/pom.xml'
+				sh 'mvn -B -DskipTests package -f technical-challenge/pom.xml'
+			}
+		}
+		stage('Deploy') {
+			steps {
+				echo 'Deploying to QA environment...'
+				sh 'ssh ec2-user@10.0.1.138 sh killJava.sh'
+				sh 'scp **/target/*.jar ec2-user@10.0.1.138:/home/ec2-user'
+				sh 'ssh ec2-user@10.0.1.138 java -Dspring.profiles.active=prod -jar technical-challenge-0.0.1-SNAPSHOT.jar >> ~/log.log 2>&1 &'
+			}
+		}
+	}
+}
