@@ -25,13 +25,15 @@ pipeline {
 				input "Please confirm after you have ran the needed manual tests."
 				sh 'ssh ec2-user@10.0.2.31 sh yourFeedbackTests/projectUpdate.sh'
 				sh 'ssh ec2-user@10.0.2.31 mvn -f /home/ec2-user/yourFeedbackTests clean verify'
+				sh 'mkdir **/target/site/reports'
+				sh 'scp ec2-user@10.0.2.31:/home/ec2-user/yourFeedbackTests/target/site/serenity **/target/site/reports/index.html'
 			}
 		}
 	}
     post {
         always {
 			publishHTML (target: [
-				reportDir: 'target/site/serenity',
+				reportDir: 'target/site/reports',
 				reportFiles: 'index.html',
 				reportName: "API tests report"
 			])
