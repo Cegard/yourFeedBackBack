@@ -13,9 +13,10 @@ import javax.persistence.*;
 public class Answer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private Long score;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
     private Evaluation evaluation;

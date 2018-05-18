@@ -1,0 +1,27 @@
+pipeline {
+	agent any
+	tools {
+		maven 'Maven'
+		jdk 'JDK-8'
+	}
+	stages {
+		stage('Build') {
+			steps {
+				echo 'Building...'
+				sh 'mvn clean -f technical-challenge/pom.xml'
+				sh 'mvn -B -DskipTests package -f technical-challenge/pom.xml'
+			}
+		}
+		stage('Test') {
+			steps {
+				echo 'Testing...'
+				sh 'mvn -B -Dspring.profiles.active=prod -f technical-challenge/pom.xml test'
+			}
+		}
+	}
+    post {
+        always {
+            junit '**/target/surefire-reports/*.xml'
+        }
+    }
+}

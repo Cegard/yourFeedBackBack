@@ -1,17 +1,13 @@
 package com.backend.technicalchallenge.restControllers;
 
+import com.backend.technicalchallenge.model.evaluation.EvaluatedUser;
+import com.backend.technicalchallenge.model.questionnaire.Question;
 import com.backend.technicalchallenge.model.user.Area;
 import com.backend.technicalchallenge.model.user.DocumentType;
 import com.backend.technicalchallenge.model.user.Role;
 import com.backend.technicalchallenge.model.user.UserApp;
-import com.backend.technicalchallenge.persistance.RoleRepository;
-import com.backend.technicalchallenge.persistance.UserRepository;
-import com.backend.technicalchallenge.services.AreaService;
-import com.backend.technicalchallenge.services.DocumentTypeService;
-import com.backend.technicalchallenge.services.RoleService;
-import com.backend.technicalchallenge.services.UserService;
+import com.backend.technicalchallenge.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +23,22 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(DocumentTypeService documentTypeService,AreaService areaService,RoleService roleService, UserService userService) {
+    public UserController(DocumentTypeService documentTypeService, AreaService areaService, RoleService roleService, UserService userService) {
         this.documentTypeService = documentTypeService;
         this.areaService = areaService;
         this.roleService = roleService;
         this.userService = userService;
     }
 
+    @GetMapping("/getUsers")
+    public List<UserApp> getActiveUsers(){
+        return userService.getActiveUsers();
+    }
+
+    @GetMapping("/getAllUsers")
+    public List<UserApp> getAllUsers(){
+        return userService.getAllUsers();
+    }
 
     @GetMapping("/getDocumentsType")
     public List<DocumentType> getDocumentsType() {
@@ -51,12 +56,23 @@ public class UserController {
     }
 
     @PostMapping("/setUser")
-    public UserApp getUser(@RequestBody UserApp userApp) {
+    public Optional<UserApp> setUser(@RequestBody UserApp userApp) {
         return userService.setUser(userApp);
     }
 
-    @GetMapping("/getuserById/{id}")
+    @GetMapping("/getUserById/{id}")
     public UserApp getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+        return userService.getUserById(id).get();
     }
+
+    @GetMapping("/getEvaluatedUserByEventId/{id}")
+    public List<EvaluatedUser> getEvaluatedUserByEventId(@PathVariable("id") Long id) {
+        return userService.getEvaluatedUserForAnEvent(id);
+    }
+    @GetMapping("/getEvaluatedUserById/{id}")
+    public EvaluatedUser getEvaluatedUserById(@PathVariable("id") Long id) {
+        return userService.getEvaluatedUserById(id).get();
+    }
+
+
 }
