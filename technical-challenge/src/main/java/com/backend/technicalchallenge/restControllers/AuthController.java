@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import static com.backend.technicalchallenge.security.Security.generateToken;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class AuthController {
 
     @Autowired
